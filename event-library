@@ -1,0 +1,28 @@
+//write event library that adds .trigger() and .on() to any input object.  can have multiple listeners for an event, & if .trigger() is called with additional arguments, pass them to the listeners
+
+
+var mixEvents = function(obj) {
+  var events = {};
+
+  obj.on = function (event, callback) {
+      for (var key in events) {
+        if (key === event) {
+          events[event].push(callback);
+        }
+      }
+       if (events[event] === undefined) {
+          events[event]= [callback];
+        }
+  };
+  
+  obj.trigger = function (event) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    if (events[event]) {
+          var callbacks = events[event];
+          for (var i = 0; i < callbacks.length; i++) {
+            callbacks[i].apply(this, args);
+          }
+      }
+  }
+  return obj;
+}
