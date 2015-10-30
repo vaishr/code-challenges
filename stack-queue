@@ -1,3 +1,7 @@
+
+//write a stack, then write a queue using 2 stacks
+
+
 var Stack = function() {
   var storage = [];
   this.push = function(val){
