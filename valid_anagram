@@ -1,0 +1,38 @@
+/* Given two strings s and t, write a function to determine if t is an anagram of s.
+
+For example,
+s = "anagram", t = "nagaram", return true.
+s = "rat", t = "car", return false.
+
+You may assume the string contains only lowercase alphabets.
+*/
+
+
+
+
+var isAnagram = function(s, t) {
+        if (s.length !== t.length) {
+            return false;
+        }
+        var tFreq = {};
+        var sFreq = {};
+        for (var i = 0; i < s.length; i++) {
+              sFreq[s[i]] ?  sFreq[s[i]]++ : sFreq[s[i]] = 1;
+        }
+        for (var j = 0; j < t.length; j++) {
+                tFreq[t[j]] ? tFreq[t[j]]++ : tFreq[t[j]] = 1;
+        }
+        for (var key in tFreq) {
+            for (var key2 in sFreq) {
+                if (key === key2) {
+                    if (tFreq[key] !== sFreq[key2]) {
+                        return false;
+                    }
+                 }
+                if (!sFreq[key] || !tFreq[key2]) {
+                        return false;
+                    }
+                }
+        }
+    return true;
+};
