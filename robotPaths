@@ -1,0 +1,58 @@
+*/
+A robot starting at the top leftmost square of an n x n board can move can move either up, down, right, or left and can only visit any spot once until it reaches the bottom right corner. How many possible unique paths are there to the bottom right corner?
+*/
+
+
+
+function makeBoard(n) {
+  var board = [];
+  for (var i = 0; i < n; i++) {
+    board.push([]);
+    for (var j = 0; j < n; j++) {
+      board[i][j].push(false);
+    }
+  }
+  board.togglePiece = function(i, j) {
+    this[i][j] = !this[i][j];
+  }
+  board.hasBeenVisited = function(i, j) {
+    return !!this[i][j];
+  }
+  return board;
+}
+
+
+function robotPaths (n) {
+  var board = makeBoard(n);
+  var count = 0;
+  
+  var move = function(row, col) {
+    board.togglePiece(row, col);
+    if (row === n-1 && col === n-1) {
+      count++;
+    }
+      //move down
+      if (row < n-1 && !board.hasBeenVisited(row+1, col)) {
+        move(row+1, col);
+        board.togglePiece(row+1, col);
+      }
+      //move right
+      if (col< n-1 && !board.hasBeenVisited(row, col+1)) {
+        move(row, col+1);
+        board.togglePiece(row, col+1);
+      }
+      //move left
+      if (col>0 && !board.hasBeenVisited(row, col-1)) {
+        move(row, col-1);
+        board.togglePiece(row, col-1);
+      }
+      //move up
+      if (row>0 && !board.hasBeenVisited(row-1, col)) {
+        move(row -1, col);
+        board.togglePiece(row-1, col);
+      }
+  }
+  
+  move(0,0);
+return count;
+}
