@@ -1,0 +1,31 @@
+//Write a tree implementation with methods addChild and contains
+
+
+var Tree = function(value){
+  var newTree = Object.create(Tree.methods);
+  newTree.value = value;
+  newTree.children = [];
+  return newTree;
+};
+
+Tree.methods = {};
+
+Tree.methods.addChild = function(value){
+  var node = treeMaker(value);
+  this.children.push(node);
+}
+Tree.methods.contains = function(value){
+  var result = false;
+  var searchTree = function(tree){
+    if(tree.value === value) {
+      result = true;
+    }
+    else if (tree.children.length) {
+      for (var i = 0; i < tree.children.length; i++) {
+        searchTree(tree.children[i]);
+       }
+    }
+  };
+  searchTree(this);
+  return result;
+}
